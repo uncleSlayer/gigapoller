@@ -4,9 +4,10 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/signup', methods = ['GET', 'POST'])
 def signup():
-    from firebase_admin.auth import get_user_by_email, create_user
-    from app import fb_app
-
+    
+    from app.database.models import User
+    from app import bcrypt_app
+    from app import db
 
     if request.method == 'POST':
 
@@ -26,18 +27,54 @@ def signup():
         
         else:
 
-            try:
-                user = get_user_by_email(email, fb_app)
+
+            user = User.query.filter_by(email=email).first()
+
+            if user:
 
                 flash('User with this email already exists.')
+            else:
 
-            except Exception as e:
+                password_hash = bcrypt_app.generate_password_hash(password=password_one)
 
-                print(e)
-                create_user(email= email, password = password_one)
-                the_user = get_user_by_email(email)
-                print(the_user)
-            
+                new_user = User(email = email, password_hash=password_hash)
 
+                db.session.add(new_user)
+                db.session.commit()
 
     return render_template('signup.html')
+
+
+@auth.route('/login')
+def login():
+
+    return render_template('login.html')
+
+
+@auth.route('/login-auth', methods=['POST'])
+def login_auth():
+    import jwt
+    import datetime
+    from app import app
+    from flask import make_response
+
+    login_data = request.get_json()
+
+
+    payload = {
+        'exp': datetime.datetime.utcnow() + datetime.timedelta(days=1),
+        'iat': datetime.datetime.utcnow(),
+        'sub': login_data['email']
+    }
+
+    jw_token = jwt.encode(
+        payload,
+        app.config.get('SECRET_KEY'),
+        algorithm= 'HS256'
+    )
+
+    resp = make_response()
+    resp.set_cookie('access_token', jw_token, httponly= True, secure= True, samesite= 'strict')
+    
+
+    return resp

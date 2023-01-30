@@ -1,6 +1,6 @@
 from app import app
-from app import cred
+from app import db
 
 if __name__ == '__main__':
-    print(cred)
+    print(db)
     app.run(debug=True)

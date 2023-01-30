@@ -1,15 +1,20 @@
 from flask import Flask
 from app.auth.auth import auth
-import firebase_admin
-from firebase_admin import credentials, initialize_app
+from app.api.api import api
+from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
 
 # FLASK APP
 app = Flask(__name__)
+
 app.register_blueprint(auth)
+app.register_blueprint(api)
+
 app.secret_key = 'the only super secret key'
 
-# FIREBASE APP
-cred = credentials.Certificate('app/fbcred.json')
-fb_app = initialize_app(cred)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://siddhant:sid00100@localhost:5432/gigapoller'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# FIREBASE AUTH APP
+db = SQLAlchemy(app)
+
+bcrypt_app = Bcrypt(app)
