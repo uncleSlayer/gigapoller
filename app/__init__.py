@@ -7,8 +7,8 @@ from flask_bcrypt import Bcrypt
 # FLASK APP
 app = Flask(__name__)
 
-app.register_blueprint(auth)
 app.register_blueprint(api)
+app.register_blueprint(auth)
 
 app.secret_key = 'the only super secret key'
 

@@ -11,7 +11,26 @@
 
 {% block content %}
 <div class="form-container">
-    hello {{ payload.sub }}
+    <h3>Create a poll</h3>
+    <form class="poll-form">
+        <div class="form-group question-group">
+            <label for="question">Question</label>
+            <input type="text" class="form-control" id="question" name="question">
+        </div>
+        <div class="form-group possible-answer-group">
+            <label for="possible-answers">Possible answers</label>
+            <input type="text" class="form-control" id="possible-answer-one">
+            <input type="text" class="form-control" id="possible-answer-two">
+            <input type="text" class="form-control" id="possible-answer-three">
+            <input type="text" class="form-control" id="possible-answer-four">
+        </div>
+
+        <div class="form-group answer-group">
+            <label for="possible-answers">Correct answer</label>
+            <input type="text" class="form-control" id="correct-answer">
+        </div>
+        <button type="button" class="btn btn-outline-dark create-poll">Create</button>
+    </form>
 </div>
 {% endblock %}
 
