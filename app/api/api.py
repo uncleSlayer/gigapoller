@@ -55,3 +55,11 @@ def create_poll():
     return jsonify({
         'status': 'success' 
     }) 
+
+
+
+@api.route('/share/<poll_id>')
+def share_poll(poll_id):
+    from app.database.models import User, Answer
+
+    return render_template('share.html')
