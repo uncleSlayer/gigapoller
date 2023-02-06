@@ -8,9 +8,23 @@
 {% block title %}
 <title>Answer poll</title>
 {% endblock %}
-
 {% block content %}
-hello
+<form class="share-form">
+    <div class="form-group">
+      <h3>Question</h3>
+      <input class="form-control" type="text" placeholder='{{poll_details.question }}' readonly>
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlSelect1">Select your answer</label>
+        <select class="form-control" id="exampleFormControlSelect1">
+          <option>{{ poll_details.option_one }}</option>
+          <option>{{ poll_details.option_two }}</option>
+          <option>{{ poll_details.option_three }}</option>
+          <option>{{ poll_details.option_four }}</option>
+        </select>
+      </div>
+      <button type="button" class="btn btn-outline-dark">Submit</button>
+  </form>
 {% endblock %}
 
 {% block script %}

@@ -60,6 +60,10 @@ def create_poll():
 
 @api.route('/share/<poll_id>')
 def share_poll(poll_id):
-    from app.database.models import User, Answer
+    from app.database.models import User, Polls
 
-    return render_template('share.html')
+    poll_details = Polls.query.filter_by(id= poll_id).first()
+
+    print(poll_details)
+
+    return render_template('share.html', poll_details= poll_details)
