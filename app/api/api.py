@@ -58,12 +58,41 @@ def create_poll():
 
 
 
-@api.route('/share/<poll_id>')
+@api.route('/share/<poll_id>', methods= ['GET'])
 def share_poll(poll_id):
-    from app.database.models import User, Polls
+    from app.database.models import Polls
 
     poll_details = Polls.query.filter_by(id= poll_id).first()
 
     print(poll_details)
 
     return render_template('share.html', poll_details= poll_details)
+
+
+@api.route('/share/vote', methods= ['POST'])
+def vote():
+    import jwt
+    from app.database.models import Answer, Polls, User
+    from app import app, db
+    
+    token = request.cookies.get('access_token')
+    vote = request.get_json()
+    token_decoded = jwt.decode(
+        token,
+        app.config.get('SECRET_KEY'),
+        algorithms=["HS256"]
+    )
+    current_user = User.query.filter_by(email= token_decoded['sub']).first()
+
+    question = vote['question']
+    answer = vote['answer']
+    poll = Polls.query.filter_by(question= question).first()
+    answer = Answer(poll_id= poll.id, author= current_user.id, answer= answer)
+
+    db.session.add(answer)
+    db.session.commit()
+    print(token_decoded)
+
+    print(current_user)
+
+    return 'success'

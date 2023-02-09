@@ -9,24 +9,24 @@
 <title>Answer poll</title>
 {% endblock %}
 {% block content %}
-<form class="share-form">
+<form class="share-form form-container">
     <div class="form-group">
       <h3>Question</h3>
-      <input class="form-control" type="text" placeholder='{{poll_details.question }}' readonly>
+      <input class="form-control question" type="text" placeholder='{{poll_details.question }}' readonly>
     </div>
     <div class="form-group">
         <label for="exampleFormControlSelect1">Select your answer</label>
-        <select class="form-control" id="exampleFormControlSelect1">
+        <select class="form-control answer" id="exampleFormControlSelect1">
           <option>{{ poll_details.option_one }}</option>
           <option>{{ poll_details.option_two }}</option>
           <option>{{ poll_details.option_three }}</option>
           <option>{{ poll_details.option_four }}</option>
         </select>
       </div>
-      <button type="button" class="btn btn-outline-dark">Submit</button>
+      <button type="button" class="btn btn-outline-dark submit-btn">Submit</button>
   </form>
 {% endblock %}
 
 {% block script %}
-<script src="static/scripts/login.js"></script>
+<script src="{{ url_for('static', filename='scripts/share.js') }}"></script>
 {% endblock %}
