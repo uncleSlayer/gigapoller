@@ -20,3 +20,13 @@
 .allpolls-container-ul{
     padding: 0;
 }
+
+.allpolls-container-list-holder{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.poll-details-para{
+    margin: 0;
+}

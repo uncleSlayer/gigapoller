@@ -37,7 +37,10 @@
         <div class="">
             <ul class="allpolls-container-ul list-group list-group-flush">
                 {% for poll in polls %}
-                <li class="list-group-item"><p>{{ poll.question }}</p></li>
+                <li class="list-group-item allpolls-container-list-holder">
+                    <p class="poll-details-para">{{ poll.question }}</p>
+                    <button type="button" class="btn btn-outline-dark poll-details-btn" data-pollid="{{ poll.id }}">Details</button>
+                </li>
                 {% endfor %}
             </ul>
         </div>

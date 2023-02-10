@@ -5,6 +5,7 @@ ansTwo = document.getElementById('possible-answer-two')
 ansThree = document.getElementById('possible-answer-three')
 ansFour = document.getElementById('possible-answer-four')
 correctAns = document.getElementById('correct-answer')
+pollDetails = document.querySelectorAll('.poll-details-btn')
 
 createBtn.addEventListener('click', (e) => {
     e.preventDefault()
@@ -28,3 +29,8 @@ createBtn.addEventListener('click', (e) => {
         }
     )
 })
+
+pollDetails.forEach(poll => {
+    console.log(poll);
+    poll.addEventListener('click', () => document.location = `/share/${poll.dataset.pollid}`)
+});
