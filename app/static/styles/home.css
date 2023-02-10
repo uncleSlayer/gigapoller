@@ -12,3 +12,11 @@
 .possible-answer-group > input{
     margin-top: 0.5%;
 }
+
+.allpolls-container-ul > li{
+    text-align: start;
+}
+
+.allpolls-container-ul{
+    padding: 0;
+}

@@ -6,6 +6,7 @@ api = Blueprint('api', __name__)
 def home():
     from app import app
     import jwt
+    from app.database.models import Polls, User
 
     token = request.cookies.get('access_token')
     print(token)
@@ -17,7 +18,13 @@ def home():
         algorithms=["HS256"]
         )
         print(payload)
-        return render_template('home.html', payload = payload)
+
+        current_user = User.query.filter_by(email=payload['sub']).first()
+
+        polls = Polls.query.filter_by(author= current_user.id).all()
+        print(polls)
+
+        return render_template('home.html', payload = payload, polls= polls)
 
     except jwt.ExpiredSignatureError:
         print('Signature expired. Please login again.')

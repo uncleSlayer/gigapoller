@@ -32,6 +32,16 @@
         </div>
         <button type="button" class="btn btn-outline-dark create-poll">Create</button>
     </form>
+    <div class="allpolls-container">
+        <h3>Your polls</h3>
+        <div class="">
+            <ul class="allpolls-container-ul list-group list-group-flush">
+                {% for poll in polls %}
+                <li class="list-group-item"><p>{{ poll.question }}</p></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </div>
 {% endblock %}
 
