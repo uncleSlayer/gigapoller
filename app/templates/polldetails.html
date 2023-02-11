@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/polldetails.css') }}">
+<!-- <link rel="stylesheet" href="static/styles/signup.css"> -->
+{% endblock %}
+
+{% block title %}
+<title>Details</title>
+{% endblock %}
+
+{% block content %}
+<div class="poll-details-container">
+    <div class="question">What is the question?</div>
+    <div class="votes-container">
+        <div class="vote">
+            <div class="progress-bar-1">
+                vote 1: 80%
+            </div>
+        </div>
+        <div class="vote">vote 2</div>
+        <div class="vote">vote 3</div>
+        <div class="vote">vote 4</div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="static/scripts/polldetails.js"></script>
+{% endblock %}

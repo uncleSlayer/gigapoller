@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, request
 
 api = Blueprint('api', __name__)
 
+# home page
+# ++++++++++ ++++++++++ ++++++++++ ++++++++++ ++++++++++
 @api.route('/home')
 def home():
     from app import app
@@ -35,6 +37,8 @@ def home():
 
     
 
+# poll creation api
+# ++++++++++ ++++++++++ ++++++++++ ++++++++++ ++++++++++
 @api.route('/create-poll', methods= ['POST'])
 def create_poll():
 
@@ -65,6 +69,9 @@ def create_poll():
 
 
 
+
+# share poll api
+# ++++++++++ ++++++++++ ++++++++++ ++++++++++ ++++++++++
 @api.route('/share/<poll_id>', methods= ['GET'])
 def share_poll(poll_id):
     from app.database.models import Polls
@@ -76,6 +83,10 @@ def share_poll(poll_id):
     return render_template('share.html', poll_details= poll_details)
 
 
+
+
+# vote api
+# ++++++++++ ++++++++++ ++++++++++ ++++++++++ ++++++++++
 @api.route('/share/vote', methods= ['POST'])
 def vote():
     import jwt
@@ -103,3 +114,11 @@ def vote():
     print(current_user)
 
     return 'success'
+
+
+
+# poll details page
+# ++++++++++ ++++++++++ ++++++++++ ++++++++++ ++++++++++
+@api.route('/details')
+def poll_details():
+    return render_template('polldetails.html')

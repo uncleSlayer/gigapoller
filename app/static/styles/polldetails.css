@@ -1,0 +1,14 @@
+
+*{
+    border: 1px solid red;
+}
+
+.poll-details-container{
+    width: 80%;
+    margin: 1% auto;
+}
+
+.progress-bar-1{
+    width: 80%;
+    background-color: green;
+}

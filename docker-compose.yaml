@@ -1,0 +1,27 @@
+version: '3'
+services:
+
+  db:
+
+    image: postgres
+
+    environment:
+      POSTGRES_PASSWORD: gigapollersecret
+      POSTGRES_USER: postgres
+      POSTGRES_DB: gigapollerdb
+
+    ports:
+      - 5435:5432
+
+  web:
+
+    build: .
+
+    ports:
+      - 5000:5000
+
+    environment:
+      DATABASE_URI: postgresql://postgres:gigapollersecret@db:5432/gigapollerdb
+
+    depends_on:
+      - db
