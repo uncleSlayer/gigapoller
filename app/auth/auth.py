@@ -35,7 +35,7 @@ def signup():
                 flash('User with this email already exists.')
             else:
 
-                password_hash = bcrypt_app.generate_password_hash(password=password_one)
+                password_hash = bcrypt_app.generate_password_hash(password=password_one).decode('utf-8')
 
                 new_user = User(email = email, password_hash=password_hash)
 
@@ -55,8 +55,10 @@ def login():
 def login_auth():
     import jwt
     import datetime
-    from app import app
+    from app import app, bcrypt_app
     from flask import make_response
+    from app.database.models import User
+    from flask import redirect, flash
 
     login_data = request.get_json()
 
@@ -73,8 +75,23 @@ def login_auth():
         algorithm= 'HS256'
     )
 
-    resp = make_response()
-    resp.set_cookie('access_token', jw_token, httponly= True, secure= True, samesite= 'strict')
-    
+    user_exist = User.query.filter_by(email= payload['sub']).first()
 
-    return resp
+    print(user_exist)
+    
+    if user_exist:
+        print(user_exist)
+
+        user_exist_pass_hash = user_exist.password_hash
+        if bcrypt_app.check_password_hash(user_exist_pass_hash, login_data['password']):
+            resp = make_response()
+            resp.set_cookie('access_token', jw_token, httponly= True, secure= True, samesite= 'strict')
+            return resp
+        
+        else:
+            flash('incorrect password given')
+
+        
+    else:
+        flash('User with this email id does not exist')
+        return redirect('login')

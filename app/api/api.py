@@ -92,6 +92,7 @@ def vote():
     import jwt
     from app.database.models import Answer, Polls, User
     from app import app, db
+    from flask import flash
     
     token = request.cookies.get('access_token')
     vote = request.get_json()
@@ -105,10 +106,15 @@ def vote():
     question = vote['question']
     answer = vote['answer']
     poll = Polls.query.filter_by(question= question).first()
-    answer = Answer(poll_id= poll.id, author= current_user.id, answer= answer)
 
-    db.session.add(answer)
-    db.session.commit()
+    if Answer.query.filter_by(poll_id= poll.id, author= current_user.id).first():
+        print('You have already voted for this poll')
+
+    else:
+        answer = Answer(poll_id= poll.id, author= current_user.id, answer= answer)
+        db.session.add(answer)
+        db.session.commit()
+    
     print(token_decoded)
 
     print(current_user)
