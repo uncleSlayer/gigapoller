@@ -5,6 +5,7 @@ submit = document.querySelector('.submit-btn')
 submit.addEventListener(
     'click',
     () => {
+        console.log(answer.value);
         fetch(
             '/share/vote',
             {

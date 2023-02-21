@@ -96,6 +96,7 @@ def vote():
     
     token = request.cookies.get('access_token')
     vote = request.get_json()
+    print(vote)
     token_decoded = jwt.decode(
         token,
         app.config.get('SECRET_KEY'),
@@ -125,6 +126,59 @@ def vote():
 
 # poll details page
 # ++++++++++ ++++++++++ ++++++++++ ++++++++++ ++++++++++
-@api.route('/details')
-def poll_details():
-    return render_template('polldetails.html')
+@api.route('/details/<pollid>')
+def poll_details(pollid):
+    from app.database.models import Answer, Polls
+
+    poll = Polls.query.filter_by(id= pollid).first()
+
+    answers = Answer.query.filter_by(poll_id= poll.id).all()
+
+    print(answers)
+
+    answers_count = len(answers)
+
+    option_one_count = 0
+    option_two_count = 0
+    option_three_count = 0
+    option_four_count = 0
+
+    for answer in answers:
+        if answer.answer == poll.option_one:
+            option_one_count += 1
+        
+        elif answer.answer == poll.option_two:
+            option_two_count += 1
+
+        elif answer.answer == poll.option_three:
+            option_three_count += 1 
+        
+        elif answer.answer == poll.option_four:
+            option_four_count += 1
+
+    
+    result = {
+        'question': poll.question,
+        'options': [
+            {
+                'option_name': poll.option_one,
+                'vote_percentage': (option_one_count / answers_count) * 100
+            },
+            {
+                'option_name': poll.option_two,
+                'vote_percentage': (option_two_count / answers_count) * 100
+            },
+            {
+                'option_name': poll.option_three,
+                'vote_percentage': (option_three_count / answers_count) * 100
+            },
+            {
+                'option_name': poll.option_four,
+                'vote_percentage': (option_four_count / answers_count) * 100
+            }
+        ]
+    }
+
+    print(result)
+
+    return render_template('polldetails.html', result= result)
