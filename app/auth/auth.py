@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash, redirect, url_for
 
 auth = Blueprint('auth', __name__)
 
@@ -41,6 +41,8 @@ def signup():
 
                 db.session.add(new_user)
                 db.session.commit()
+
+                return redirect(url_for("auth.login"))
 
     return render_template('signup.html')
 

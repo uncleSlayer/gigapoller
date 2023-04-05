@@ -18,6 +18,13 @@ const sendLoginInfo = async () => {
             }
         }
     )
+    .then(
+        (resp)=>{
+            if(resp.status == 200){
+                window.location.href = "/home"
+            }
+        }
+    )
 }
 
 loginBtn.addEventListener('click', (e) => {
