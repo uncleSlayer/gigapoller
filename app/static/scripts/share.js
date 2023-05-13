@@ -19,5 +19,8 @@ submit.addEventListener(
                 }
             }
         )
+        .then(() => {
+            alert("successfully voted")
+        })
     }
 )

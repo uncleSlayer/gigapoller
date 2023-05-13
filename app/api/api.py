@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, flash
 
 api = Blueprint('api', __name__)
 
@@ -60,8 +60,12 @@ def create_poll():
     print(poll_data['thirdAns'])
 
     poll = Polls(author= author.id, question= poll_data['question'], option_one= poll_data['firstAns'], option_two= poll_data['secondAns'], option_three= poll_data['thirdAns'], option_four= poll_data['fourthAns'], correct_answer= poll_data['correctAns'])
-    db.session.add(poll)
-    db.session.commit()
+
+    try:
+        db.session.add(poll)
+        db.session.commit()
+    except Exception as e:
+        print(e)
 
     return jsonify(
         {
