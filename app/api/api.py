@@ -63,9 +63,11 @@ def create_poll():
     db.session.add(poll)
     db.session.commit()
 
-    return jsonify({
-        'status': 'success' 
-    }) 
+    return jsonify(
+        {
+            "message": "success"
+        }
+    )
 
 
 

@@ -28,6 +28,11 @@ createBtn.addEventListener('click', (e) => {
             })
         }
     )
+    .then(
+        () => {
+            location.reload()
+        }
+    )
 })
 
 pollDetails.forEach(poll => {
