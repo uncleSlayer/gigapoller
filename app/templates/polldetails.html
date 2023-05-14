@@ -12,29 +12,15 @@
 
 {% block content %}
 <div class="poll-details-container">
-    <div class="question">{{ result.question }}</div>
-    <div class="votes-container">
-        <!-- <div class="vote">
-            <div class="progress-bar-1" style="width: 50%; background-color: green">
-                vote 1: 50%
-            </div>
-        </div>
-        <div class="vote">
-            <div class="progress-bar-1" style="width: 30%; background-color: green;">
-                vote 2: 30%
-            </div>
-        </div> -->
-        {% for res in result.options %}
-        <div class="vote">
-            <div class="progress-bar" style="width: {{res.vote_percentage}}%; background-color: green">
-                {{ res.option_name }}: {{ res.vote_percentage }}
-            </div>
-        </div>
-        {% endfor %}
+    <div class="bg-light" style="margin-bottom: 10px; padding: 2%;">{{ result.question }}</div>
+    {% for option in result.options %}
+    <div style="padding: 2%; display: flex;">
+        <div style="padding: 2%;">{{ option.option_name }}</div> <div class="bg-light" style="padding: 2%; width: 100%;">{{ option.vote_percentage }} %</div>
     </div>
+    {% endfor %}
 </div>
 {% endblock %}
 
 {% block script %}
-<script src="static/scripts/polldetails.js"></script>
+<!-- <script src="static/scripts/polldetails.js"></script> -->
 {% endblock %}
